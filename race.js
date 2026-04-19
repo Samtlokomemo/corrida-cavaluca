@@ -16,7 +16,6 @@ const container = document.getElementById('cavalos-container');
 const hud = document.getElementById('hud');
 const hudToggle = document.getElementById('hud-toggle');
 
-// Função de easing com Curva de Bézier cúbica (easeInOutCubic)
 function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
@@ -144,7 +143,7 @@ function finalizarCorrida() {
     
     const resultados = Object.entries(estado.cavalos_tempos)
         .map(([index, tempo]) => ({
-            cavalo: cavalos[parseInt(index)].nome,
+            nome: cavalos[parseInt(index)].nome,
             tempo: tempo,
             colocacao: 0
         }))
@@ -153,15 +152,12 @@ function finalizarCorrida() {
     resultados.forEach((resultado, index) => {
         resultado.colocacao = index + 1;
     });
-    
-    // debug
-    console.log('🏁 RESULTADO DA CORRIDA 🏁');
-    console.table(resultados);
-    
-    
+
+    localStorage.setItem('resultadosCorrida', JSON.stringify(resultados));
+
     setTimeout(() => {
-        window.location.href = 'corrida.html';
-    }, 3000);
+        window.location.href = 'podio.html';
+    }, 2000);
 }
 
 window.addEventListener('load', () => {

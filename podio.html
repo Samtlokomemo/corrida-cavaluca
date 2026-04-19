@@ -1,0 +1,44 @@
+<body>
+
+<h1>🏁 Resultado da Corrida</h1>
+
+<div class="podio" id="podio"></div>
+
+<button onclick="irParaEstatisticas()">Ver Estatísticas</button>
+
+<script>
+const resultados = JSON.parse(localStorage.getItem('resultadosCorrida'));
+
+const podio = document.getElementById('podio');
+
+function criarPodio() {
+    const top3 = resultados.slice(0, 3);
+
+    const ordem = [1, 0, 2];
+
+    ordem.forEach((i) => {
+        const r = top3[i];
+        const div = document.createElement('div');
+
+        div.className = 'posicao ' + 
+            (r.colocacao === 1 ? 'primeiro' :
+             r.colocacao === 2 ? 'segundo' : 'terceiro');
+
+        div.innerHTML = `
+            <h2>${r.colocacao}º</h2>
+            <p>${r.nome}</p>
+            <p>${(r.tempo/1000).toFixed(2)}s</p>
+        `;
+
+        podio.appendChild(div);
+    });
+}
+
+function irParaEstatisticas() {
+    window.location.href = 'estatisticas.html';
+}
+
+criarPodio();
+</script>
+
+</body>
