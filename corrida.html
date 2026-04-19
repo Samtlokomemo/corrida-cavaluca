@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Fontdiner+Swanky&display=swap" rel="stylesheet">
     <title>Corrida Cavaluca</title>
 </head>
+
 <body>
     <div class="pista">
         <div class="hud" id="hud"></div>
         <button class="hud-toggle" id="hud-toggle" aria-label="Mostrar HUD">&#x23f1;</button>
         <div class="cavalos" id="cavalos-container"></div>
     </div>
-
+    <div id="podium-modal" class="podium-overlay">
+        <div class="podium-content">
+            <h1 class="titulo-podio">🏆 CLASSIFICAÇÃO FINAL 🏆</h1>
+            <div class="podium-container">
+                <div class="podium-step fourth">
+                    <div class="char-img" id="pos-4-img"></div>
+                    <div class="step-block">4º</div>
+                    <span class="name" id="pos-4-name">---</span>
+                </div>
+                <div class="podium-step second">
+                    <div class="char-img" id="pos-2-img"></div>
+                    <div class="step-block">2º</div>
+                    <span class="name" id="pos-2-name">---</span>
+                </div>
+                <div class="podium-step first">
+                    <div class="char-img" id="pos-1-img"></div>
+                    <div class="step-block">1º</div>
+                    <span class="name" id="pos-1-name">---</span>
+                </div>
+                <div class="podium-step third">
+                    <div class="char-img" id="pos-3-img"></div>
+                    <div class="step-block">3º</div>
+                    <span class="name" id="pos-3-name">---</span>
+                </div>
+                <div class="podium-step fifth">
+                    <div class="char-img" id="pos-5-img"></div>
+                    <div class="step-block">5º</div>
+                    <span class="name" id="pos-5-name">---</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <button onclick="window.location.reload()" class="btn-jogar">CORRER DE NOVO</button>
+                <button onclick="window.location.href='choose.html'" class="btn-jogar">TROCAR CAVALO</button>
+                <button onclick="verEstatisticas()" class="btn-jogar">📊 ESTATÍSTICAS</button>
+            </div>
+        </div>
+    </div>
     <script src="race.js"></script>
 </body>
+
 </html>
