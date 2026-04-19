@@ -7,4 +7,5 @@ Site que simula uma corrida de cavalos feito para a disciplina de IHC
 - Samuel Rocha: [Tela de escolhas](https://github.com/Samtlokomemo/corrida-cavaluca/pull/1)
 - Luiz Fernando: [Tela de Corrida](https://github.com/Samtlokomemo/corrida-cavaluca/pull/5)
 - Hugo Ryan: [Tela de configurações]()
-- Gustavo Lins: [Tela Final]() 
+- Gustavo Lins: [Tela Final]()
+- Pedro Santos: []()
