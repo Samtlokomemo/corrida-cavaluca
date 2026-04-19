@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+}
+
+
+.home {
+  width: 100%;
+  height: 100vh;
+
+  background-image: url("palco.png");
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+
+.container-config {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.btn-config {
+  font-size: 30px;
+  text-decoration: none;
+
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  padding: 10px 15px;
+  border-radius: 10px;
+
+  transition: 0.2s;
+}
+
+.btn-config:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+.titulo {
+  display: flex;           
+  flex-direction: column;   
+  align-items: center;      
+
+  font-family: 'Fontdiner Swanky', cursive;
+  text-align: center;
+  gap: 25px;
+}
+
+
+.linha1 {
+  width: 502px;
+  height: 44px;
+  font-size: 80px;
+  color: #FCD136;
+
+  -webkit-text-stroke: 2px #F69B25;
+
+  margin-bottom: 10px;
+}
+
+
+.linha2 {
+  width: 360px;
+  height: 148px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  font-size: 80px;
+}
+
+
+.caval, .ca {
+  color: #FDD134;
+  -webkit-text-stroke: 2px #000000;
+}
+
+
+.ferradura {
+  width: 100px;
+  margin: 0;
+}
+
+
+.btn-jogar {
+  width: 178px;
+  height: 67px;
+  margin-top: 40px;
+
+  background-color: #1fa64a;
+
+  border: 3px solid #000000;
+  border-radius: 999px;
+
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+
+  color: #FDD134;
+  -webkit-text-stroke: 0.5px #F28123;
+
+  text-shadow: 1px 1px 0 #000;
+}
+.btn-jogar:hover {
+  background-color: #209942;
+  transform: scale(1.05);
+}
