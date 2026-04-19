@@ -42,7 +42,7 @@ function inicializarCavalos() {
         
         estado.cavalos_posicoes[index] = 0;
     });
-
+    if (hud) {
     hud.innerHTML = '';
     cavalos.forEach((cavalo, index) => {
         const hudItem = document.createElement('div');
@@ -60,6 +60,7 @@ function inicializarCavalos() {
         `;
         hud.appendChild(hudItem);
     });
+    }
 }
 
 
