@@ -45,9 +45,9 @@ body {
 
 
 .titulo {
-  display: flex;           
-  flex-direction: column;   
-  align-items: center;      
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   font-family: 'Fontdiner Swanky', cursive;
   text-align: center;
@@ -69,7 +69,7 @@ body {
 
 .linha2 {
   width: 360px;
-  height: 148px; 
+  height: 148px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,7 +78,8 @@ body {
 }
 
 
-.caval, .ca {
+.caval,
+.ca {
   color: #FDD134;
   -webkit-text-stroke: 2px #000000;
 }
@@ -115,6 +116,7 @@ body {
 
   text-shadow: 1px 1px 0 #000;
 }
+
 .btn-jogar:hover {
   background-color: #209942;
   transform: scale(1.05);

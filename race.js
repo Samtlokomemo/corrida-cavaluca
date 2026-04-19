@@ -16,6 +16,7 @@ const container = document.getElementById('cavalos-container');
 const hud = document.getElementById('hud');
 const hudToggle = document.getElementById('hud-toggle');
 
+// Função de easing com Curva de Bézier cúbica (easeInOutCubic)
 function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
@@ -25,20 +26,20 @@ function inicializarCavalos() {
     container.innerHTML = '';
     estado.cavalos_posicoes = {};
     estado.cavalos_tempos = {};
-    
+
     cavalos.forEach((cavalo, index) => {
         const cavaloEl = document.createElement('div');
         cavaloEl.className = 'cavalo';
         cavaloEl.id = `cavalo-${index}`;
-        
+
         const img = document.createElement('img');
         img.src = cavalo.img;
         img.alt = cavalo.nome;
         img.title = cavalo.nome;
-        
+
         cavaloEl.appendChild(img);
         container.appendChild(cavaloEl);
-        
+
         estado.cavalos_posicoes[index] = 0;
     });
 
@@ -64,16 +65,16 @@ function inicializarCavalos() {
 
 function iniciarCorrida() {
     if (estado.em_corrida) return;
-    
+
     estado.em_corrida = true;
-    
+
     // Gerar tempos aleatórios para cada cavalo
     const temposFinais = {};
     cavalos.forEach((_, index) => {
         temposFinais[index] = Math.random() * 3000 + 3000;
         estado.cavalos_tempos[index] = temposFinais[index];
     });
-    
+
 
     const tempoInicio = Date.now();
     let ultimoTempoFrame = tempoInicio;
@@ -87,21 +88,21 @@ function iniciarCorrida() {
 
     // Posição final: antes da linha de chegada (right: 20px)
     const posicaoFinal = window.innerWidth - 40; // 20px da borda + 20px de margem
-    
+
     // Distância que o cavalo precisa percorrer (da posição inicial 30px até a posição final, subtraindo a largura do cavalo)
     const distanciaTotal = posicaoFinal - 30 - tamanhoDoCavalo;
-        
+
     const intervalo = setInterval(() => {
         const agora = Date.now();
         const tempoDecorrido = agora - tempoInicio;
         const dt = Math.max((agora - ultimoTempoFrame) / 1000, 0.01);
         ultimoTempoFrame = agora;
         let todosTerminaram = true;
-        
+
         cavalos.forEach((_, index) => {
             const cavaloEl = document.getElementById(`cavalo-${index}`);
             const tempoFinal = estado.cavalos_tempos[index];
-            
+
             let posicao;
             if (tempoDecorrido < tempoFinal) {
                 todosTerminaram = false;
@@ -130,7 +131,7 @@ function iniciarCorrida() {
                 velocidadeEl.textContent = `${velocidade} px/s`;
             }
         });
-        
+
         if (todosTerminaram) {
             clearInterval(intervalo);
             finalizarCorrida();
@@ -140,24 +141,22 @@ function iniciarCorrida() {
 
 function finalizarCorrida() {
     estado.em_corrida = false;
-    
-    const resultados = Object.entries(estado.cavalos_tempos)
+
+
+    const resultadosOrdenados = Object.entries(estado.cavalos_tempos)
         .map(([index, tempo]) => ({
             nome: cavalos[parseInt(index)].nome,
-            tempo: tempo,
-            colocacao: 0
+            img: cavalos[parseInt(index)].img,
+            tempo: tempo
         }))
         .sort((a, b) => a.tempo - b.tempo);
-    
-    resultados.forEach((resultado, index) => {
-        resultado.colocacao = index + 1;
-    });
 
-    localStorage.setItem('resultadosCorrida', JSON.stringify(resultados));
 
     setTimeout(() => {
-        window.location.href = 'podio.html';
-    }, 2000);
+        mostrarPodio(resultadosOrdenados);
+    }, 1000);
+    
+
 }
 
 window.addEventListener('load', () => {
@@ -170,3 +169,60 @@ window.addEventListener('load', () => {
         });
     }
 });
+
+function mostrarPodio(resultados) {
+    const modal = document.getElementById('podium-modal');
+    modal.style.display = 'flex';
+
+    resultados.forEach((cavalo, index) => {
+        const pos = index + 1;
+        const imgElement = document.getElementById(`pos-${pos}-img`);
+        const nameElement = document.getElementById(`pos-${pos}-name`);
+
+        if (imgElement && nameElement) {
+            imgElement.innerHTML = `<img src="${cavalo.img}" alt="${cavalo.nome}">`;
+            nameElement.textContent = cavalo.nome;
+        }
+    });
+}
+
+function reiniciarJogo() {
+    window.location.href = 'choose.html';
+}
+function verEstatisticas() {
+    window.location.href = 'estatisticas.html';
+}
+
+
+function dispararConfetes() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    const colors = ['#FDD134', '#1fa64a', '#f44336', '#2196F3', '#FFFFFF'];
+
+    for (let i = 0; i < 150; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 10 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speed: Math.random() * 3 + 2,
+            angle: Math.random() * 6
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            p.y += p.speed;
+            p.x += Math.sin(p.angle);
+        });
+        if (estado.em_corrida === false) requestAnimationFrame(draw);
+    }
+    draw();
+}
