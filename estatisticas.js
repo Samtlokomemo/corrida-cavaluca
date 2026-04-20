@@ -33,7 +33,8 @@ function montarTabela() {
 }
 
 function voltar() {
-    window.location.href = 'podio.html';
+    localStorage.setItem('voltarParaPodio', 'true');
+    window.location.href = 'corrida.html';
 }
 
 montarTabela();
