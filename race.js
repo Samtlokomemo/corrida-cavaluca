@@ -142,26 +142,47 @@ function iniciarCorrida() {
 function finalizarCorrida() {
     estado.em_corrida = false;
 
-
     const resultadosOrdenados = Object.entries(estado.cavalos_tempos)
         .map(([index, tempo]) => ({
             nome: cavalos[parseInt(index)].nome,
             img: cavalos[parseInt(index)].img,
-            tempo: tempo
+            tempo: tempo,
+            colocacao: 0 
         }))
         .sort((a, b) => a.tempo - b.tempo);
 
+    resultadosOrdenados.forEach((r, index) => {
+        r.colocacao = index + 1;
+    });
+
+    localStorage.setItem('resultadosCorrida', JSON.stringify(resultadosOrdenados));
+
+    console.log("RESULTADOS SALVOS:", resultadosOrdenados);
 
     setTimeout(() => {
         mostrarPodio(resultadosOrdenados);
+        dispararConfetes();
     }, 1000);
-    
-
 }
 
 window.addEventListener('load', () => {
-    inicializarCavalos();
-    setTimeout(iniciarCorrida, 500);
+
+    const voltarParaPodio = localStorage.getItem('voltarParaPodio');
+
+    inicializarCavalos(); 
+
+    if (voltarParaPodio === 'true') {
+        const resultados = JSON.parse(localStorage.getItem('resultadosCorrida'));
+
+        if (resultados) {
+            mostrarPodio(resultados);
+            dispararConfetes();
+        }
+
+        localStorage.removeItem('voltarParaPodio');
+    } else {
+        setTimeout(iniciarCorrida, 500);
+    }
 
     if (hudToggle) {
         hudToggle.addEventListener('click', () => {
@@ -191,6 +212,25 @@ function reiniciarJogo() {
 }
 function verEstatisticas() {
     window.location.href = 'estatisticas.html';
+}
+function reiniciarCorrida() {
+    localStorage.removeItem('voltarParaPodio');
+    window.location.reload();
+}
+function trocarCavalo() {
+    localStorage.removeItem('voltarParaPodio');
+    window.location.href = 'choose.html';
+}
+
+if (voltarParaPodio === 'true') {
+    localStorage.removeItem('voltarParaPodio');
+
+    const resultados = JSON.parse(localStorage.getItem('resultadosCorrida'));
+
+    if (resultados) {
+        mostrarPodio(resultados);
+        dispararConfetes();
+    }
 }
 
 
